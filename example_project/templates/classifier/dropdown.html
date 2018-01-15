@@ -1,0 +1,5 @@
+<button class="btn btn-outline-primary dropdown-toggle float-right mb-2" data-toggle="dropdown"> <span id="selected">Chose option</span> </button>
+<div class="dropdown-menu">
+{% for gallery in galleries %}											
+<a class="dropdown-item" href="#">{{ gallery.title }}</a>
+{% endfor %}
