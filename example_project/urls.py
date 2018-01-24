@@ -6,8 +6,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^photologue/', include('photologue.urls')),
-    url(r'^classifier/', include('classifier.urls')),
+    url(r'^photologue/', include('photologue.urls', namespace='photologue')),
+    url(r'^classifier/', include('classifier.urls', namespace='classifier')),
     # url(r'^$', TemplateView.as_view(template_name="homepage.html"), name='homepage'),
 
 

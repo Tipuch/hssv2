@@ -1,8 +1,13 @@
 from django.contrib import admin
-from .models import Categorie
 
-class CategorieAdmin(admin.ModelAdmin):
+from .models import Category, PhotoSet
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     pass
-admin.site.register(Categorie, CategorieAdmin)
 
-# Register your models here.
+
+@admin.register(PhotoSet)
+class PhotoSetAdmin(admin.ModelAdmin):
+    pass

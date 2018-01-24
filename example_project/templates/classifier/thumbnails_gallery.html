@@ -1,14 +1,20 @@
-<div class="row p-3">
-    <div class="col-md-3 p-2">       
-        <img class="d-block img-fluid" src="{{ MEDIA_URL }}photologue/photos/3.jpg">
+<div class="row">
+    <div class="col-md-12">
+        <img id="myImg" data-id="{{ photos.0.id }}" class="d-block img-fluid p-2"
+             src="{{ photos.0.image.url }}">
     </div>
-    <div class="col-md-3 p-2">       
-        <img class="d-block img-fluid" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-    </div> 
-    <div class="col-md-3 p-2">       
-        <img class="d-block img-fluid" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-    </div> 
-    <div class="col-md-3 p-2">       
-        <img class="d-block img-fluid" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-    </div>                         
+</div>
+<div class="row p-3">
+    <div class="col-md-3 p-2">
+        <img class="d-block img-fluid" src="{{ photos.1.image.url }}">
+    </div>
+    <div class="col-md-3 p-2">
+        <img class="d-block img-fluid" src="{{ photos.2.image.url }}">
+    </div>
+    <div class="col-md-3 p-2">
+        <img class="d-block img-fluid" src="{{ photos.3.image.url }}">
+    </div>
+    <div class="col-md-3 p-2">
+        <img class="d-block img-fluid" src="{{ photos.4.image.url }}">
+    </div>
 </div>

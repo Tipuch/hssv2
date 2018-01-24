@@ -1,5 +1,7 @@
-<button class="btn btn-outline-primary dropdown-toggle float-right mb-2" data-toggle="dropdown"> <span id="selected">Chose option</span> </button>
+<button class="btn btn-outline-primary dropdown-toggle float-right mb-2" data-toggle="dropdown"><span
+        id="selected-set" data-id="{{ photo_sets.0.id }}">{{ photo_sets.0.title }}</span></button>
 <div class="dropdown-menu">
-{% for gallery in galleries %}											
-<a class="dropdown-item" href="#">{{ gallery.title }}</a>
-{% endfor %}
+    {% for photo_set in photo_sets %}
+        <a class="dropdown-item" href="#" data-id="{{ photo_set.id }}">{{ photo_set.title }}</a>
+    {% endfor %}
+</div>

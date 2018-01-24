@@ -1,43 +1,58 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse, Http404
-import json
-from photologue.models import Photo, Gallery
-from .models import Categorie
+from django.db.models import Count
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseBadRequest
+
+from django.utils.translation import ugettext
+from django.views import View
+from django.views.decorators.http import require_GET
+
+from classifier.forms import CategoryForm
+from .constants import CATEGORIES_LIMIT
+from .models import Category, PhotoSet
 
 
+@require_GET
 def index(request):
-    extra_content = {}
-
-    galleries = Gallery.objects.all()
-    categories = Categorie.objects.all()
-
-
-    extra_content['galleries'] = galleries
-    extra_content['categories'] = categories
-
     return render(
         request,
         'classifier/index.html',
-        extra_content
+        {'photo_sets': PhotoSet.objects.all()}
     )
 
 
-# def get_new_picture(request):
+class CategoriesView(View):
+    template_name = 'classifier/categories.html'
+
+    def get(self, request):
+        if request.is_ajax():
+            categories = Category.objects.all().annotate(photo_count=Count('gallery__photos'))
+            return render(
+                request, self.template_name, {
+                    'categories': categories,
+                    'CATEGORIES_LIMIT': CATEGORIES_LIMIT
+                })
+        else:
+            return HttpResponseBadRequest(reason=ugettext("Request needs to be sent via AJAX"))
+
+    def post(self, request):
+        if request.is_ajax():
+            category_form = CategoryForm(request.POST)
+            if category_form.is_valid():
+                category_form.save()
+                return HttpResponse(status=201)
+            else:
+                return HttpResponseBadRequest(reason=str(category_form.errors))
+        else:
+            return HttpResponseBadRequest(reason=ugettext("Request needs to be sent via AJAX"))
 
 
-def post_category(request):
-    response_data = {}
-    response_data['something'] = 'useful'
-    return HttpResponse(json.dumps({'success': False, 'cause': None}), content_type='application/json')
+class PhotosView(View):
+    template_name = 'classifier/thumbnails_gallery.html'
 
-
-# This function add a new category to the list if there's no more than 8 of them.
-def add_new_category(request):
-    catname = request.GET.get('catname') 
-    c1 = Categorie(title=catname)
-    if Categorie.objects.all() < 8:
-        c1.save()
-        return JsonResponse(data)
-        
-    else:
-        return HttpResponse("There's already 8 categories, which is the maximum you can have.")
+    def get(self, request, photo_set_id):
+        if request.is_ajax():
+            photos = get_object_or_404(
+                PhotoSet.objects.prefetch_related('gallery__photos'), id=photo_set_id).gallery.photos.all()
+            return render(request, self.template_name, {'photos': photos})
+        else:
+            return HttpResponseBadRequest(reason=ugettext("Request needs to be sent via AJAX"))

@@ -1,12 +1,15 @@
+<p class="lead">Categories</p>
 {% for category in categories %}
-<div class="row">
-    <div class="col-md-12 p-2">
-        <button type="button" class="btn btn-category btn-block btn-lg">{{ category.title }} - {{ category.photo_count }}</button>
+    <div class="row">
+        <div class="col-md-12 p-2">
+            <button type="button" class="btn btn-category btn-block btn-lg">{{ category.title }} - {{ category.photo_count }}</button>
+        </div>
     </div>
-</div>
 {% endfor %}
-<div class="row">
-    <div class="col-md-12 p-2">
-        <a href="#" id="myCatButton" class="btn btn-category btn-block btn-lg">+</a>
+{% if categories|length < CATEGORIES_LIMIT %}
+    <div class="row">
+        <div class="col-md-12 p-2">
+            <a href="#" id="cat-button" class="btn btn-category btn-block btn-lg">+</a>
+        </div>
     </div>
-</div>
+{% endif %}
