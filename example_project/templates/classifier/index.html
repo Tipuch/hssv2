@@ -31,11 +31,11 @@
             </div>
         </div>
         <div id="images-container" data-url="{% url "classifier:photos" 0 %}">
-            {% include 'classifier/thumbnails_gallery.html' %}
+            {# content will be rendered in javascript #}
         </div>
     </div>
-    <div id="categories-container" class="col-md-3 pt-5" data-url="{% url 'classifier:categories' %}">
-        {% include 'classifier/categories.html' %}
+    <div id="categories-container" class="col-md-3 pt-5" data-url="{% url 'classifier:categories' %}" data-associate-url="{% url 'classifier:associate_photo' %}">
+        {# content will be rendered in javascript #}
     </div>
 </div>
 <div class="py-4 bg-header">

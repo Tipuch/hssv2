@@ -138,7 +138,7 @@ LOGGING = {
     },
     # Loggers decide what is logged.
     'loggers': {
-        '': {
+        'django': {
             # Default (suitable for dev) is to log to console.
             'handlers': ['console'],
             'level': 'INFO',

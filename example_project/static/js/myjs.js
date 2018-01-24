@@ -3,6 +3,8 @@ var selectedSet = "span#selected-set";
 var catButton = "a#cat-button";
 var photosContainer = "div#images-container";
 var dropdownChoices = ".dropdown-menu a";
+var selectedImage = "img#myImg";
+
 
 $(function () {
     // display categories
@@ -18,6 +20,10 @@ $(function () {
         $selectedSet.data("id", $(this).data("id"));
         refreshPhotos();
     });
+
+     $(categoriesContainer).on("click", "button", function () {
+        associatePhoto($(this).data('id'));
+     });
 
     $(categoriesContainer).on("click", catButton, function () {
         var catname = prompt('Please enter the name of the new category');
@@ -117,6 +123,29 @@ function refreshPhotos() {
         },
         error: function (xhr, errmsg, err) {
             console.log(errmsg);
+        }
+    })
+}
+
+function associatePhoto(categoryId) {
+    var photoId = $(selectedImage).data('id');
+    var photoSetId = $(selectedSet).data('id');
+    var url = $(categoriesContainer).data('associate-url');
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            "photo": photoId,
+            "photo_set": photoSetId,
+            "category": categoryId
+        },
+        success: function (data) {
+            refreshCategories();
+            refreshPhotos();
+        },
+        // handle a non-successful response
+        error: function (xhr, errmsg, err) {
+            console.log(errmsg); // provide a bit more info about the error to the console
         }
     })
 }

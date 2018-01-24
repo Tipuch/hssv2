@@ -1,20 +1,17 @@
 <div class="row">
     <div class="col-md-12">
-        <img id="myImg" data-id="{{ photos.0.id }}" class="d-block img-fluid p-2"
-             src="{{ photos.0.image.url }}">
+        {% if photos %}
+            <img id="myImg" data-id="{{ photos.0.id }}" class="d-block img-fluid p-2"
+                 src="{{ photos.0.image.url }}">
+        {% endif %}
     </div>
 </div>
 <div class="row p-3">
-    <div class="col-md-3 p-2">
-        <img class="d-block img-fluid" src="{{ photos.1.image.url }}">
-    </div>
-    <div class="col-md-3 p-2">
-        <img class="d-block img-fluid" src="{{ photos.2.image.url }}">
-    </div>
-    <div class="col-md-3 p-2">
-        <img class="d-block img-fluid" src="{{ photos.3.image.url }}">
-    </div>
-    <div class="col-md-3 p-2">
-        <img class="d-block img-fluid" src="{{ photos.4.image.url }}">
-    </div>
+    {% for photo in photos %}
+        {% if not forloop.first %}
+            <div class="col-md-3 p-2">
+                <img class="d-block img-fluid" src="{{ photo.image.url }}">
+            </div>
+        {% endif %}
+    {% endfor %}
 </div>
