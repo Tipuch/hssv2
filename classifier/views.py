@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 from django.utils.translation import ugettext
 from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET
 
 from .forms import CategoryForm, PhotoAssociationForm
@@ -11,6 +12,7 @@ from .constants import CATEGORIES_LIMIT, PHOTOS_DISPLAY_LIMIT
 from .models import Category, PhotoSet
 
 
+@ensure_csrf_cookie
 @require_GET
 def index(request):
     return render(
